@@ -1,57 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
+import "./App.scss";
+import Header from "./components/header/Header";
+import CartFeature from "./features/cart";
+import ProductAdditional from "./features/product/components/ProductAdditional";
+import ProductDescription from "./features/product/components/ProductDescription";
+import ProductReviews from "./features/product/components/ProductReviews";
+import DetailPage from "./features/product/pages/ProductDetail/DetailPage";
+import Product from "./features/product/Product";
+import Layout from "./layouts/Layout";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <Suspense>
+        <Routes>
+          <Route path="/" element={<Layout></Layout>}>
+            <Route path="/" element={<Product></Product>}></Route>
+            <Route path="/cart" element={<CartFeature></CartFeature>}></Route>
+            <Route path="/:productId" element={<DetailPage></DetailPage>}>
+              {/* <Route
+                path="/:productId"
+                element={<ProductDescription></ProductDescription>}></Route> */}
+              <Route
+                path="/:productId/additional"
+                element={<ProductAdditional></ProductAdditional>}></Route>
+              <Route
+                path="/:productId/reviews"
+                element={<ProductReviews></ProductReviews>}></Route>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+    </>
   );
 }
 

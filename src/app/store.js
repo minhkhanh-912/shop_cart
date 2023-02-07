@@ -1,8 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import logger from "redux-logger";
+import userSlice from "../features/auth/userSlice";
+import cartSlice from "../features/cart/CartSlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    user: userSlice,
+    cart: cartSlice,
   },
+  middleware: (gDM) => gDM().concat(logger),
 });
